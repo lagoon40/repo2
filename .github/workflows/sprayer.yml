@@ -1,0 +1,46 @@
+name: Sprayer
+
+on:
+  workflow_call:
+    inputs:
+      username:
+        description: 'A username passed from the caller workflow'
+        default: 'john-doe'
+        required: true
+        type: string
+  workflow_dispatch:
+    inputs:
+      username:
+        description: 'A username passed from the caller workflow'
+        default: 'john-doe'
+        required: true
+        type: string
+      runIdentifier:
+        description: 'run identifier'
+        required: false
+
+jobs:
+  id:
+    name: Workflow ID Provider
+    runs-on: ubuntu-latest
+    steps:
+      - name: ${{github.event.inputs.runIdentifier}}
+        run: echo run identifier ${{ inputs.runIdentifier }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: python3 -m pip install -r requirements.txt
+      - name: Run script
+        run: python sprayer.py
+        env:
+          USERNAME: ${{ inputs.username }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          CATCHERURL: ${{ secrets.CATCHERURL }} 
+          CATCHERTLS: ${{ secrets.CATCHERTLS }}  
+      
