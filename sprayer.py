@@ -12,8 +12,8 @@ if missingEnvVars:
 
 methodEnc = os.getenv("METHOD_ENC")
 urlEnc = os.getenv("URL_ENC")
-headersEnc = os.getenv("HEADERS_ENC")
-bodyEnc = os.getenv("BODY_ENC")
+headersEnc = os.getenv("HEADERS_ENC", default="")
+bodyEnc = os.getenv("BODY_ENC", default="")
 
 def parseInputs(methodEnc, urlEnc, headersEnc, bodyEnc):
     method = base64.b64decode(methodEnc).decode()
