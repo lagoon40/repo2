@@ -13,11 +13,11 @@ on:
         type: string
       headersEnc:
         description: 'Request headers encoded as Base64'
-        required: true
+        required: false
         type: string
       bodyEnc:
         description: 'Request body encoded as Base64'
-        required: true
+        required: false
         type: string
       runIdentifier:
         description: 'run identifier'
