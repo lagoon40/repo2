@@ -19,14 +19,13 @@ def parseInputs(methodEnc, urlEnc, headersEnc, bodyEnc):
     method = base64.b64decode(methodEnc).decode()
     url = base64.b64decode(urlEnc).decode()
     
-    headers = None
+    headers = {}
     if len(headersEnc) > 0:
         headersRaw = base64.b64decode(headersEnc).decode()
         headersLines = headersRaw.splitlines()
         if len(headersLines)%2 != 0:
             raise Exception("Can not parse the request headers.")
 
-        headers = {}
         for i in range(0, len(headersLines), 2):
             headers[headersLines[i]] = headersLines[i+1]
 
