@@ -1,18 +1,22 @@
 name: Sprayer
 
 on:
-  workflow_call:
-    inputs:
-      username:
-        description: 'A username passed from the caller workflow'
-        default: 'john-doe'
-        required: true
-        type: string
   workflow_dispatch:
     inputs:
-      username:
-        description: 'A username passed from the caller workflow'
-        default: 'john-doe'
+      methodEnc:
+        description: 'Request method encoded as Base64'
+        required: true
+        type: string
+      urlEnc:
+        description: 'Request URL encoded as Base64'
+        required: true
+        type: string
+      headersEnc:
+        description: 'Request headers encoded as Base64'
+        required: true
+        type: string
+      bodyEnc:
+        description: 'Request body encoded as Base64'
         required: true
         type: string
       runIdentifier:
@@ -26,7 +30,7 @@ jobs:
     steps:
       - name: ${{github.event.inputs.runIdentifier}}
         run: echo run identifier ${{ inputs.runIdentifier }}
-  build:
+  req:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -39,8 +43,8 @@ jobs:
       - name: Run script
         run: python sprayer.py
         env:
-          USERNAME: ${{ inputs.username }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          CATCHERURL: ${{ secrets.CATCHERURL }} 
-          CATCHERTLS: ${{ secrets.CATCHERTLS }}  
+          METHOD_ENC: ${{ inputs.methodEnc }}
+          URL_ENC: ${{ inputs.urlEnc }}
+          HEADERS_ENC: ${{ inputs.headersEnc }} 
+          BODY_ENC: ${{ inputs.bodyEnc }}  
       
