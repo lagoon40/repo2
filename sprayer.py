@@ -69,6 +69,8 @@ def makeRequest(method, url, headers=None, body=None):
 
 reqMethod, reqUrl, reqHeaders, reqBody = parseInputs(methodEnc, urlEnc, headersEnc, bodyEnc)
 
+print("REQ", (reqMethod, reqUrl, reqHeaders, reqBody))
+
 respStatus, respHeaders, respBody, respErr = makeRequest(reqMethod, reqUrl, reqHeaders, reqBody)
 
 if respErr != None:
